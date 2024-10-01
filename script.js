@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let submitBtn = document.getElementById("submit");
     let output = document.getElementById("output");
 
-    // Check if there's a saved username in localStorage on page load
+    // Check localStorage on page load and show the button if details exist
     if (localStorage.getItem("username")) {
         showExistingUserButton();
     }
@@ -14,6 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let passWord = document.getElementById("password").value;
         let checkBox = document.getElementById("checkbox");
 
+        // Saving to localStorage if "Remember me" is checked
         if (checkBox.checked) {
             localStorage.setItem("username", userName);
             localStorage.setItem("password", passWord);
@@ -24,8 +25,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         alert("Logged in as " + userName);
 
-        // Show the existing user button if it's not already present
-        if (!document.getElementById("existing")) {
+        // Make sure the button only gets created once
+        if (!document.getElementById("existing") && checkBox.checked) {
             showExistingUserButton();
         }
     });
@@ -38,11 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         existingBtn.addEventListener("click", () => {
             let user = localStorage.getItem("username");
-            if (user) {
-                alert(`Logged in as ${user}`);
-            } else {
-                alert("No user found in local storage.");
-            }
+            alert(`Logged in as ${user}`);
         });
     }
 });
